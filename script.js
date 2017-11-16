@@ -1,6 +1,10 @@
 document.addEventListener('DOMContentLoaded', function() {
   var body = document.querySelector('body');
-  body.insertAdjacentElement('afterbegin', createButton('Disparar evento'));
+  var button = createButton('Disparar evento')
+  body.insertAdjacentElement('afterbegin', button);
+  button.addEventListener('click', function() {
+    print();
+  });
 });
 
 function createButton(text) {
@@ -15,9 +19,6 @@ function createButton(text) {
     addClass(button, name);
   });
   button.setAttribute('name', 'button');
-  button.addEventListener('click', function() {
-    print();
-  });
 
   return button;
 };
@@ -28,5 +29,8 @@ function addClass(element, className) {
 
 function print() {
   var root = document.getElementById('root');
-  root.innerHTML = '<h1>Hola</h1>';
+  twttr.widgets.createTweet(
+    '931177846193696770',
+    root
+  );
 };
