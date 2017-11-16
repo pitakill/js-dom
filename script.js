@@ -1,13 +1,21 @@
 document.addEventListener('DOMContentLoaded', function() {
-  // Traemos todos los botones del documento
-  var button = document.getElementsByTagName('button');
-  // Referenciamos al primero, porque sabemos que es el único
-  var show = button[0];
-  // Agregamos un receptor de click con su respectivo callback
-  show.addEventListener('click', function() {
+  var body = document.querySelector('body');
+  body.insertAdjacentElement('afterbegin', createButton('Disparar evento'));
+});
+
+function createButton(text) {
+  var button = document.createElement('button');
+  button.innerText = text;
+  button.classList.add('btn');
+  button.classList.add('waves-effect');
+  button.classList.add('waves-light');
+  button.setAttribute('name', 'button');
+  button.addEventListener('click', function() {
     print();
   });
-});
+
+  return button;
+};
 
 function print() {
   var root = document.getElementById('root');
