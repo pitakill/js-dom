@@ -1,3 +1,4 @@
 document.addEventListener('DOMContentLoaded', function() {
-  console.debug('hola');
+  var root = document.getElementById('root');
+  root.innerHTML = '<h1>Hola</h1>';
 });
