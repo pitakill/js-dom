@@ -6,15 +6,24 @@ document.addEventListener('DOMContentLoaded', function() {
 function createButton(text) {
   var button = document.createElement('button');
   button.innerText = text;
-  button.classList.add('btn');
-  button.classList.add('waves-effect');
-  button.classList.add('waves-light');
+  var classArray = [
+    'btn',
+    'waves-effect',
+    'waves-ligth'
+  ];
+  classArray.forEach(function(name) {
+    addClass(button, name);
+  });
   button.setAttribute('name', 'button');
   button.addEventListener('click', function() {
     print();
   });
 
   return button;
+};
+
+function addClass(element, className) {
+  element.classList.add(className);
 };
 
 function print() {
