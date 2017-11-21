@@ -17,6 +17,9 @@ window.twttr = (function(d, s, id) {
 }(document, "script", "twitter-wjs"));
 
 $(() => {
+  $('body').addClass('container');
+  $('#root').addClass('row');
+
   setupPlugin([
   createChild,
   printTweet
@@ -28,8 +31,9 @@ $(() => {
       tweets.forEach(tweet => {
         const id = getId(tweet.url);
         $('#root')
-          .createChild(id, 'wrapper')
-          .printTweet();
+        .createChild(id, 'wrapper')
+        .addClass('col s12 m6 l4 xl3')
+        .printTweet();
       });
     })
     .fail(error => console.error(error));
