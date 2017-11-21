@@ -28,14 +28,21 @@ $(() => {
     })
     .fail(error => console.error(error));
   }, 10);
+
+  $.fn.greenify = function() {
+    this.css('background-color', 'green');
+    return this;
+  };
+
+  body.greenify();
 });
 
-function print(id) {
+const print = id => {
   const [root] = $('#root');
   twttr.widgets.createTweet(id, root);
 };
 
-function getId(url) {
+const getId = url => {
   const match = url.match(/^(?:https?):\/\/(?:www\.)?twitter\.com\/(?:[A-Za-z0-9_]{1,15})\/status\/([0-9]+)/);
   const value = match ? match[1] : null;
 
