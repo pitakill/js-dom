@@ -19,30 +19,15 @@ window.twttr = (function(d, s, id) {
 $(() => {
   const body = $('body');
 
-  const button = $('<button></button>', {
-    class: "btn waves-effect, waves-ligth",
-    click: () => {
-      const [input] = $('#tweet');
-      const id = getId(input.value);
-      print(id);
-      input.value = null;
-    },
-    text: 'Mostar Tweet'
-  }).prependTo(body);
-
-  const inputField = $('<div></div>', {
-    class: 'input-field'
-  }).prependTo(body);
-
-  const input = $('<input/>', {
-    id: 'tweet',
-    type: 'text'
-  }).appendTo(inputField);
-
-  const label = $('<label></label>', {
-    for: 'tweet',
-    text: 'Tweet URL'
-  }).appendTo(inputField);
+  window.setTimeout(() => {
+    $.ajax('api/v1/feed.json')
+    .done(tweets => {
+      tweets.forEach(tweet => {
+        print(getId(tweet.url));
+      });
+    })
+    .fail(error => console.error(error));
+  }, 10);
 });
 
 function print(id) {
