@@ -17,7 +17,10 @@ window.twttr = (function(d, s, id) {
 }(document, "script", "twitter-wjs"));
 
 $(() => {
-  const body = $('body');
+  setupPlugin([
+  createChild,
+  printTweet
+  ]);
 
   window.setTimeout(() => {
     $.ajax('api/v1/feed.json')
@@ -31,24 +34,31 @@ $(() => {
     })
     .fail(error => console.error(error));
   }, 10);
-
-  $.fn.createChild = function(id, classes) {
-    const element = $('<div></div>', {
-      class: classes,
-      'data-tweet': id
-    });
-    this.prepend(element);
-
-    return element;
-  };
-
-  $.fn.printTweet = function() {
-    const id = this.data('tweet');
-    const [element] = this;
-    twttr.widgets.createTweet(id, element);
-    return this;
-  };
 });
+
+function createChild(id, classes) {
+  const element = $('<div></div>', {
+    class: classes,
+    'data-tweet': id
+  });
+  this.prepend(element);
+
+  return element;
+};
+
+function printTweet() {
+  const id = this.data('tweet');
+  const [element] = this;
+  twttr.widgets.createTweet(id, element);
+  return this;
+};
+
+const setupPlugin = functions => {
+  functions.forEach(func => {
+    if (typeof func !== 'function') return;
+    $.fn[func.name] = func;
+  });
+};
 
 const getId = url => {
   const match = url.match(/^(?:https?):\/\/(?:www\.)?twitter\.com\/(?:[A-Za-z0-9_]{1,15})\/status\/([0-9]+)/);
