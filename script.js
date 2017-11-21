@@ -23,24 +23,32 @@ $(() => {
     $.ajax('api/v1/feed.json')
     .done(tweets => {
       tweets.forEach(tweet => {
-        print(getId(tweet.url));
+        const id = getId(tweet.url);
+        $('#root')
+          .createChild(id, 'wrapper')
+          .printTweet();
       });
     })
     .fail(error => console.error(error));
   }, 10);
 
-  $.fn.greenify = function() {
-    this.css('background-color', 'green');
-    return this;
+  $.fn.createChild = function(id, classes) {
+    const element = $('<div></div>', {
+      class: classes,
+      'data-tweet': id
+    });
+    this.prepend(element);
+
+    return element;
   };
 
-  body.greenify();
+  $.fn.printTweet = function() {
+    const id = this.data('tweet');
+    const [element] = this;
+    twttr.widgets.createTweet(id, element);
+    return this;
+  };
 });
-
-const print = id => {
-  const [root] = $('#root');
-  twttr.widgets.createTweet(id, root);
-};
 
 const getId = url => {
   const match = url.match(/^(?:https?):\/\/(?:www\.)?twitter\.com\/(?:[A-Za-z0-9_]{1,15})\/status\/([0-9]+)/);
